@@ -59,9 +59,8 @@ a = []
             digit = n % 10
             a.append(digit)
             n //= 10
-    for i in range(len(a)):
+    for i in range(len(a)-1):
         if(a[i]==a[i+1]==8):
             print("True")
-            break
-        else:
-            continue
+            return
+    print('False')
