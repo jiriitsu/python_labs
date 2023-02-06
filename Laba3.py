@@ -54,3 +54,14 @@ def double_eights(n):
     """
     "*** YOUR CODE HERE ***"
    
+a = []
+    while(n > 0):
+            digit = n % 10
+            a.append(digit)
+            n //= 10
+    for i in range(len(a)):
+        if(a[i]==a[i+1]==8):
+            print("True")
+            break
+        else:
+            continue
