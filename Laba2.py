@@ -11,4 +11,4 @@ def generate_twins(start, end):
          print("{:d} и {:d}".format(i, j))
 
 print("Числа-близнецы от 2 до 1000:")
-generate_twins(2
+generate_twins(2, 1001)
