@@ -1,0 +1,99 @@
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, relationship
+
+engine = create_engine('sqlite:///laba13.db')
+Base = declarative_base()
+
+class Author(Base):
+    __tablename__ = 'author'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    books = relationship("Book", back_populates="author")
+
+class Book(Base):
+    __tablename__ = 'book'
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    annotation = Column(String)
+    pages = Column(Integer)
+    isbn = Column(String)
+    
+    author_id = Column(Integer, ForeignKey('author.id'))
+    author = relationship("Author", back_populates="books")
+    publisher_id = Column(Integer, ForeignKey('publisher.id'))
+    publisher = relationship("Publisher", back_populates="books")
+
+class Publisher(Base):
+    __tablename__ = 'publisher'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    city = Column(String)
+
+    books = relationship("Book", back_populates="publisher")
+
+Base.metadata.create_all(engine)
+
+# Создание сессии
+Session = sessionmaker(bind=engine)
+session = Session()
+
+""" author1 = Author(name='Александр Пушкин')
+author2 = Author(name='Лев Толстой')
+author3 = Author(name='Федор Достоевский')
+session.add_all([author1, author2, author3])
+session.commit() """
+
+""" publisher1 = Publisher(name='Эксмо', city='Москва')
+publisher2 = Publisher(name='Азбука', city='Санкт-Петербург')
+session.add_all([publisher1, publisher2])
+session.commit() """
+
+""" book1 = Book(title='Евгений Онегин', annotation='Роман в стихах', pages=240, isbn='978-5-699-28888-5', author=author1, publisher=publisher1)
+book2 = Book(title='Война и мир', annotation='Исторический роман', pages=1274, isbn='978-5-17-080554-3', author=author2, publisher=publisher1)
+book3 = Book(title='Преступление и наказание', annotation='Роман-эпилог', pages=544, isbn='978-5-699-63981-9', author=author3, publisher=publisher2)
+session.add_all([book1, book2, book3])
+session.commit() """
+#обновление таблицы
+#user = session.query(User).filter_by(name='John').first()
+#user.age = 35
+#session.commit()
+
+#удаление записей
+#user = session.query(User).filter_by(name='John').first()
+#session.delete(user)
+#session.commit()
+
+#запросы с условиями
+#users = session.query(User).filter(User.age > 25).all()
+
+books = session.query(Book).all()
+for book in books:
+    print(f"Название: {book.title}")
+    print(f"Аннотация: {book.annotation}")
+    print(f"ISBN: {book.isbn}")
+    print(f"Число страниц: {book.pages}")
+    print(f"Издательство: {book.publisher.name} ({book.publisher.city})")
+    print("")
+print("\n")
+    #print("Автор: ")
+    #for author in book.author:
+    #    print(f"- {author.name}")
+
+publishers = session.query(Publisher).all()
+for publisher in publishers:
+    num_books = len(publisher.books)
+    print(f"Издательство: {publisher.name}")
+    print(f"Город: {publisher.city}")
+    print(f"Количество изданных книг: {num_books}")
+    print("")
+
+#обновление таблицы
+#user = session.query(User).filter_by(name='John').first()
+#user.age = 35
+#session.commit()
+
+#удаление записей
+#user = session.query(User).filter_by(name='John').first()
+#session.delete(user)
+#session.commit()
