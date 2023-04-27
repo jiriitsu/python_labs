@@ -4,6 +4,7 @@ from my_package.speed_calc import hdd_speed, ssd_speed, flash_speed
 from docx import Document
 dpg.create_context()
 def my_func(sender, data):
+  
     total_memory = dpg.get_value(input_MB)  + (dpg.get_value(input_GB)*1024)
     #print(total_memory, "MB")
     dpg.set_value('hdd', round(hdd_speed(total_memory), 2))
@@ -40,6 +41,7 @@ with dpg.window(height = 600, width=800):
         )   
     dpg.add_button(label = "Calculate ", callback = my_func)
     dpg.add_text('Reading/recording time in sec')
+    #поменять HDD/SSD на выпадающее окно выбора, переделать
     dpg.add_input_text(label='HDD', callback=my_func, tag='hdd')
     dpg.add_input_text(label='SSD', callback=my_func, tag='ssd')
     dpg.add_input_text(label='Flash', callback=my_func, tag='flash')
