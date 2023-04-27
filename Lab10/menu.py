@@ -5,20 +5,27 @@ from docx import Document
 dpg.create_context()
 def my_func(sender, data):
     total_memory = dpg.get_value(input_MB)  + (dpg.get_value(input_GB)*1024)
-    print(total_memory, "MB")
+    #print(total_memory, "MB")
     dpg.set_value('hdd', round(hdd_speed(total_memory), 2))
     dpg.set_value('ssd', round(ssd_speed(total_memory), 2))
     dpg.set_value('flash', round(flash_speed(total_memory), 2))
 
-    print("Запись/чтение на HDD займет", round(hdd_speed(total_memory), 2), "секунд")
-    print("Запись/чтение на SSD займет", round(ssd_speed(total_memory), 2), "секунд")
-    print("Запись/чтение на Flash займет", round(flash_speed(total_memory), 2), "секунд")
+    #print("Запись/чтение на HDD займет", round(hdd_speed(total_memory), 2), "секунд")
+    #print("Запись/чтение на SSD займет", round(ssd_speed(total_memory), 2), "секунд")
+    #print("Запись/чтение на Flash займет", round(flash_speed(total_memory), 2), "секунд")
 #def data_heh(sender, data):
     #dpg.set_value('input1', hdd_speed)
 
 def saving_results(sender, data):
-    doc = Document()
-    doc.save()
+    results = Document()
+    table = results.add_table(rows = 2, cols = 3)
+    hdd_cell = table.cell(0,0)
+    hdd_cell.text = 'HDD'
+    ssd_cell = table.cell(0,1)
+    ssd_cell.text = 'SSD'
+    flash_cell = table.cell(0,2)
+    flash_cell.text = 'Flash'
+    results.save()
 
     
 
@@ -36,7 +43,7 @@ with dpg.window(height = 600, width=800):
     dpg.add_input_text(label='HDD', callback=my_func, tag='hdd')
     dpg.add_input_text(label='SSD', callback=my_func, tag='ssd')
     dpg.add_input_text(label='Flash', callback=my_func, tag='flash')
-    dpg.add_button(label='Save results', callback =saving_results)
+    #dpg.add_button(label='Save results', callback =saving_results)
 
 
     dpg.add_text
