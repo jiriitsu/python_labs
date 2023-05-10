@@ -20,7 +20,7 @@
 # Приправить своей фантазией по вкусу (коты? коровы? люди? трактор? что придумается)
 
 import simple_draw as sd
-from paintFunc import rainbow, house, tree, rain, sun, smile
+from paintFunc import rainbow, house, tree, rain, sun, smile, tree1, cat
 
 
 sd.resolution = (1920, 1080)
@@ -46,12 +46,20 @@ sun.drawing_sun(sun_start, sun_radius)
 smile_color = sd.COLOR_DARK_GREEN
 smile.draw_smile(1200, 300, smile_color)
 
-tree_leaves_color = sd.COLOR_
-tree_color = (101, 67, 33)
+tree_leaves_color = sd.COLOR_RED
+tree_color = sd.COLOR_DARK_ORANGE
 tree_start = sd.Point(1400, 150)
 tree.draw_tree(tree_start, tree_leaves_color, tree_color)
 
+tree1_leaves_color = sd.COLOR_PURPLE
+tree1_color = sd.COLOR_DARK_ORANGE
+tree1_start = sd.Point(1600, 50)
+tree1.draw_tree(tree1_start, tree1_leaves_color, tree1_color)
 
+cat_x = 1100
+cat_y = 200
+cat_color = sd.COLOR_DARK_YELLOW
+cat.draw_cat(cat_x, cat_y, cat_color)
 rain.draw_rain()
 
 sd.pause()
