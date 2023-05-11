@@ -15,7 +15,9 @@ def my_func(sender, data):
     dpg.set_value('hdd', round(hdd_speed(total_memory), 2))
     dpg.set_value('ssd', round(ssd_speed(total_memory), 2))
     dpg.set_value('flash', round(flash_speed(total_memory), 2))
-
+    dpg.set_value('hddpr', hdd_price(total_memory))
+    dpg.set_value('ssdpr', ssd_price(total_memory))
+    dpg.set_value('flashpr', flash_price(total_memory))
 # def saving_results(sender, data):
 #    results = Document()
 #    table = results.add_table(rows = 2, cols = 3)
@@ -39,6 +41,9 @@ with dpg.window(height = 600, width=800):
     dpg.add_input_text(label='SSD', callback=my_func, tag='ssd')
     dpg.add_input_text(label='Flash', callback=my_func, tag='flash')
     dpg.add_text('Prices 2nd task')
+    dpg.add_input_text(label='HDD', callback=my_func, tag='hddpr')
+    dpg.add_input_text(label='SSD', callback=my_func, tag='ssdpr')
+    dpg.add_input_text(label='Flash', callback=my_func, tag='flashpr')
 
     # dpg.add_button(label='Save results', callback=saving_results)
 
