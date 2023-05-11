@@ -1,54 +1,49 @@
 import dearpygui.dearpygui as dpg
 from dearpygui_ext import logger
-from my_package.speed_calc import hdd_speed, ssd_speed, flash_speed
+from my_package.speed_calc import *
+from my_package.price_calc import *
 from docx import Document
 dpg.create_context()
 def my_func(sender, data):
-  
-    total_memory = dpg.get_value(input_MB)  + (dpg.get_value(input_GB)*1024)
+    if(dpg.get_value('select') == 'GB'):
+        total_memory = (dpg.get_value('Mem_amount') * 1024)
+    else:
+        total_memory = dpg.get_value('Mem_amount')
+    # total_memory = dpg.get_value('Mem_amount') 
+
     #print(total_memory, "MB")
     dpg.set_value('hdd', round(hdd_speed(total_memory), 2))
     dpg.set_value('ssd', round(ssd_speed(total_memory), 2))
     dpg.set_value('flash', round(flash_speed(total_memory), 2))
 
-    #print("Запись/чтение на HDD займет", round(hdd_speed(total_memory), 2), "секунд")
-    #print("Запись/чтение на SSD займет", round(ssd_speed(total_memory), 2), "секунд")
-    #print("Запись/чтение на Flash займет", round(flash_speed(total_memory), 2), "секунд")
-#def data_heh(sender, data):
-    #dpg.set_value('input1', hdd_speed)
-
-def saving_results(sender, data):
-    results = Document()
-    table = results.add_table(rows = 2, cols = 3)
-    hdd_cell = table.cell(0,0)
-    hdd_cell.text = 'HDD'
-    ssd_cell = table.cell(0,1)
-    ssd_cell.text = 'SSD'
-    flash_cell = table.cell(0,2)
-    flash_cell.text = 'Flash'
-    results.save()
+# def saving_results(sender, data):
+#    results = Document()
+#    table = results.add_table(rows = 2, cols = 3)
+#     hdd_cell = table.cell(0,0)
+#     hdd_cell.text = 'HDD'
+#    ssd_cell = table.cell(0,1)
+#    ssd_cell.text = 'SSD'
+#    flash_cell = table.cell(0,2)
+#    flash_cell.text = 'Flash'
+#    results.save()
 
     
 
 with dpg.window(height = 600, width=800):
-    input_MB = dpg.add_input_int(
-        label = "MB",
-        on_enter = True,
-    )
-    input_GB = dpg.add_input_int(
-        label = "GB",
-        on_enter = True,
-        )   
+
+    dpg.add_input_int(label='Enter the amount', on_enter=True, tag='Mem_amount')
+    dpg.add_combo(label='Select MB or GB', items=['MB', 'GB'], tag='select', callback=my_func)
     dpg.add_button(label = "Calculate ", callback = my_func)
     dpg.add_text('Reading/recording time in sec')
-    #поменять HDD/SSD на выпадающее окно выбора, переделать
     dpg.add_input_text(label='HDD', callback=my_func, tag='hdd')
     dpg.add_input_text(label='SSD', callback=my_func, tag='ssd')
     dpg.add_input_text(label='Flash', callback=my_func, tag='flash')
-    #dpg.add_button(label='Save results', callback =saving_results)
+    dpg.add_text('Prices 2nd task')
+
+    # dpg.add_button(label='Save results', callback=saving_results)
 
 
-    dpg.add_text
+    
 dpg.create_viewport(title='Devices', width=800, height=600)
 dpg.setup_dearpygui()
 dpg.show_viewport()
