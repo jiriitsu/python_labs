@@ -1,22 +1,24 @@
+from math import sqrt, cos
+import cython
+@cython.boundscheck(False)
+@cython.wraparound(False)
+  
+def main():
+    n = 10
+    m = 10
 
-from cython.cimports.libc.math import sqrt
+    f = lambda x: sqrt(x+2) - sqrt(x) - 3/11
 
-def f(i):
-    return sqrt(i+2) - sqrt(i) - 3/11
-
-def g(j):
-    return ((3*(j**2) - 11) / ((-j**3) - 2))
-
-
-n = 10  
-def matrix(n):
-    a = [[0]*n for _ in range(n)]
-
+    g = lambda x: ((3*(x**2) - 11) / ((-x**3) - 2))
+    A = [[f(i) + g(j) for j in range(1, n + 1)] for i in range(1, m + 1)]
+    sum = 0
     for i in range(n):
-        for j in range(n):
-            a[i][j] = f(i+1) + g(j+1) 
+        for j in range(m):
+            A[i][j] = A[i][j]
+            sum+=A[i][j]
+    tot = 1/100 * sum
+    print(round(tot,6))
 
-    total_sum = sum(sum(row) for row in a)
-    tot = 1/100 * total_sum
-    print(round(tot, 6))
 
+if __name__ == "__main__":
+    main()
