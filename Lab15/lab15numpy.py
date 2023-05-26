@@ -1,7 +1,5 @@
 from math import *
 import numpy as np
-import time
-start_time = time.time()
 n = 10 
 
 def f(i):
@@ -19,18 +17,9 @@ def matrix(n):
 
 
     sum = np.sum(a)
-
-    # for i in range(n):
-    #     for j in range(n):
-    #         sum += a[i,j]
-
-    # print(sum)
-
     itog = 1/100*sum
     print(round(itog, 6))
 
 matrix(n)
-end_time = time.time()
-execution_time = end_time - start_time
-print(f"Execution time: {execution_time} seconds")
+
 
